@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Cart from "../app/component/Cart/page"
 
 export default function Home() {
