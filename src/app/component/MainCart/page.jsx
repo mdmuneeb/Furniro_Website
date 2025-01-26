@@ -1,5 +1,5 @@
 import React from 'react'
-import Label from '../Label/page'
+import Label from '../Label/page.jsx'
 
 const MainCart = () => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import SingleData from './SingleData/page';
+import SingleData from './SingleData/page.jsx';
 
 const ShoppingCart = () => {
   return (

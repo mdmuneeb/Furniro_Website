@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Cart from "../../../component/Cart/page";
-import ShoppingCart from "../../../component/ShoppingCart/page";
+import Cart from "../../../component/Cart/page.jsx";
+import ShoppingCart from "../../../component/ShoppingCart/page.jsx";
 
 const Single = () => {
   const [cartVisible, setCartVisible] = useState(false);

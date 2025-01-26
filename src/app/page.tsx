@@ -1,4 +1,4 @@
-import Cart from "../app/component/Cart/page"
+import Cart from "../app/component/Cart/page.jsx"
 
 export default function Home() {
   return (

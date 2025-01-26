@@ -1,6 +1,6 @@
 import React from 'react'
-import Cart from '../../component/Cart/page'
-import Label from '../../component/Label/page'
+import Cart from '../../component/Cart/page.jsx'
+import Label from '../../component/Label/page.jsx'
 
 const Shop = () => {
   return (
