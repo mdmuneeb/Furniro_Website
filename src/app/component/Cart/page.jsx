@@ -1,19 +1,52 @@
-import React from 'react';
+"use client";
 
-const Cart = () => {
+import React, { useEffect, useState } from 'react';
+import { client } from '@/sanity/lib/client';
+import imageUrlBuilder from "@sanity/image-url";
+import { useAppDispatch } from '@/app/store/hooks';
+import { add } from '@/app/store/features/cart/cartSlice';
+
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+  return builder.image(source).url();
+}
+
+const Cart = ({ProductInfo}) => {
+  console.log(ProductInfo);
+
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    if (ProductInfo.image) {
+      setImageUrl(urlFor(ProductInfo.image));
+    }
+  }, [ProductInfo.image]);
+
+  const dispatch = useAppDispatch()
+  
+  const handleAddToCart = (product) =>{
+    dispatch(add(product))  
+    console.log(product);
+  }
+  
   return (
+
+    
     <div className="relative group w-64 bg-white shadow-md overflow-hidden">
       {/* Image Section */}
       <div className="relative">
-        <img 
-          src="/Product/Product_images_1.png" 
-          alt="Night Lamp" 
-          className="w-full h-64 object-cover"
-        />
+      {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={ProductInfo.name}
+            className="w-full h-64 object-cover"
+          />
+        )}
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-[#3A3A3A] bg-opacity-75 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="flex flex-col items-center space-y-2">
-            <button className="bg-[#FFFFFF] text-[#B88E2F] px-4 py-2 w-[12rem] font-semibold">Add to Cart</button>
+            <button className="bg-[#FFFFFF] text-[#B88E2F] px-4 py-2 w-[12rem] font-semibold" onClick={()=>handleAddToCart(ProductInfo)}>Add to Cart</button>
             <div className="flex space-x-4">
               <button className="text-white flex justify-around gap-2">
                 <svg width="16" height="15" className='pt-1' viewBox="0 0 16 15" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -32,14 +65,12 @@ const Cart = () => {
         </div>
 
         <div className="p-4">
-          <h2 className="text-xl font-semibold">Grifo</h2>
-          <p className="text-gray-600">Night lamp</p>
-          <p className="text-lg font-bold text-gray-800">Rp 1.500.000</p>
+          <h2 className="text-xl font-semibold">{ProductInfo.name}</h2>
+          <p className="text-gray-600">{ProductInfo.description}</p>
+          <p className="text-lg font-bold text-gray-800">Rp {ProductInfo.price}</p>
         </div>
 
       </div>
-
-      {/* Text Section */}
     </div>
   );
 };

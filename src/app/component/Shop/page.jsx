@@ -1,8 +1,40 @@
-import React from 'react'
+"use client"; 
+import React, { useEffect, useState } from 'react';
 import Cart from '../../component/Cart/page.jsx'
 import Label from '../../component/Label/page.jsx'
+// import { client } from '@/sanity/lib/client.js'
+import { client } from '@/sanity/lib/client';
+
+// async function getData(){
+//     let data = await client.fetch(`*[_type == 'product']`)
+//     return data
+    
+// }
 
 const Shop = () => {
+
+    const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 8; 
+    const [totalPages, setTotalPages] = useState(0);
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const products = await client.fetch(`*[_type == 'product']`);
+          setData(products);
+          setTotalPages(Math.ceil(products.length / itemsPerPage));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+  
+      fetchData();
+    }, []);
+
+
+
+
   return (
     <div>
       <div className='h-[19rem] bg-[#F9F1E7] flex justify-center items-center'>
@@ -60,7 +92,15 @@ const Shop = () => {
       <div className="flex justify-center mt-16">
 
         <div className="grid grid-cols-4 gap-4">
-            <div>
+                {data.map((product)=>{
+                    return(
+                        <div>
+                            <Cart key={product._id} ProductInfo={product} />
+                        </div>
+                    ) 
+                    
+                })}
+            {/* <div>
                 <Cart/>
             </div>
             <div>
@@ -83,7 +123,7 @@ const Shop = () => {
             </div>
             <div>
                 <Cart/>
-            </div>
+            </div> */}
         </div>
      </div>
 
@@ -100,7 +140,41 @@ const Shop = () => {
         <div className='bg-[#F9F1E7] text-black py-2 px-6 rounded-sm'>
             <p>Next</p>
         </div>
+        {/* {Array.from({ length: totalPages }, (_, i) => (
+        <button key={i + 1} onClick={() => setCurrentPage(i + 1)}>
+            {i + 1}
+        </button>
+        ))}
+        <div>
+            <button onClick={nextPage} disabled={isLastPage}>Next</button>
+        </div> */}
      </div>
+
+
+{/* <div className="flex justify-center my-10">
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={isFirstPage}
+          className={`px-4 py-2 border ${isFirstPage ? "text-gray-400" : "text-black"}`}
+        >
+          Previous
+        </button>
+        <span className="px-4">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={isLastPage}
+          className={`px-4 py-2 border ${isLastPage ? "text-gray-400" : "text-black"}`}
+        >
+          Next
+        </button>
+      </div> */}
+
+
+
+
+
 
      <div>
         <Label/>

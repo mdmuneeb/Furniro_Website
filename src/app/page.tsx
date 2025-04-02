@@ -1,6 +1,43 @@
+"use client"; 
 import Cart from "../app/component/Cart/page.jsx"
+import React, { useEffect, useState } from 'react';
+import { client } from '@/sanity/lib/client';
 
 export default function Home() {
+
+      const [data, setData] = useState([]);
+      const [showShowButton, setShowShowButton] = useState(false);
+      const [productsInfo, setProductsInfo] = useState([]);
+  
+      useEffect(() => {
+        async function fetchData() {
+          try {
+            const products = await client.fetch(`*[_type == 'product']`);
+            setProductsInfo(products);
+            
+            if(products.length > 4){
+              let shortList = products.slice(0,4); 
+              setShowShowButton(true);
+              setData(shortList);
+              console.log(shortList);
+              
+            }
+            else{
+              setData(products);
+              setShowShowButton(false);
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+    
+        fetchData();
+      }, []);
+
+      let showMoreButtonFunction = () =>{
+        setShowShowButton(false);
+        setData(productsInfo);
+      }
   return (
     <>
     <div>
@@ -55,10 +92,19 @@ export default function Home() {
         <div className="flex justify-center mb-8">
           <h2 className="text-2xl font-bold">Our Products</h2>
         </div>
-        <div className="flex justify-center">
+        <div className={`flex justify-center ${showShowButton ? '': 'mb-10'}`}>
 
           <div className="grid grid-cols-4 gap-4">
-            <div>
+              {data.map((product)=>{
+                  return(
+                      <div>
+                          <Cart key={product._id} ProductInfo={product} />
+                      </div>
+                  ) 
+                  
+              })}
+
+            {/* <div>
               <Cart/>
             </div>
             <div>
@@ -81,12 +127,12 @@ export default function Home() {
             </div>
             <div>
               <Cart/>
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="flex justify-center my-8">
-          <button className="border border-[#B88E2F] text-[#B88E2F] w-[14rem] h-[2.5rem] hover:bg-[#B88E2F] hover:text-white">Show More</button>
-        </div>
+        {showShowButton && (<div className="flex justify-center my-8">
+          <button onClick={showMoreButtonFunction} className="border border-[#B88E2F] text-[#B88E2F] w-[14rem] h-[2.5rem] hover:bg-[#B88E2F] hover:text-white" >Show More</button>
+        </div>)}
       </div>
     </div>
     </>
