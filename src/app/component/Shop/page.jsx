@@ -1,7 +1,7 @@
 "use client"; 
 import React, { useEffect, useState } from 'react';
-import Cart from '../../component/Cart/page'
-import Label from '../../component/Label/page'
+import Cart from '../Cart/Cart'
+import Label from '../Label/Label'
 // import { client } from '@/sanity/lib/client.js'
 import { client } from '@/sanity/lib/client';
 

@@ -1,5 +1,5 @@
 "use client"; 
-import Cart from "../app/component/Cart/page";
+import Cart from "./component/Cart/Cart";
 import React, { useEffect, useState } from 'react';
 import { client } from '@/sanity/lib/client';
 

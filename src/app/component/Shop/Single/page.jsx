@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Cart from "../../../component/Cart/page.jsx";
+import Cart from "../../Cart/Cart.jsx";
 import ShoppingCart from "../../../component/ShoppingCart/page.jsx";
 
 const Single = () => {
