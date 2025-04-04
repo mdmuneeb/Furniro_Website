@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CartState {
-  items: string[];
+  items: CartItem[];
 }
 
 const initialState: CartState = {
@@ -25,8 +25,8 @@ export const cartSlice = createSlice({
     add:(state, action: PayloadAction<CartItem>)=>{
           const cartList =  JSON.parse(localStorage.getItem("cart") || '[]') ;
           state.items = cartList; 
-          // state.items.push(action.payload);
-          const newCart = [...cartList, action.payload];
+          state.items.push(action.payload);
+          // const newCart = [...cartList, action.payload];
           console.log(action.payload);
           
           localStorage.setItem("cart", JSON.stringify(state.items));
@@ -34,7 +34,7 @@ export const cartSlice = createSlice({
 
     removeFromCart:(state,  action: PayloadAction<{ _id: string }>)=>{
       const cartList =  JSON.parse(localStorage.getItem("cart") || '[]') ;
-      state.items = cartList.filter((item:any) => item._id != action.payload._id)
+      state.items = cartList.filter((item) => item._id != action.payload._id)
       localStorage.setItem("cart", JSON.stringify(state.items))
     }
   },
