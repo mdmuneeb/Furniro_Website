@@ -4,7 +4,6 @@
 import React, { ReactNode, useRef } from 'react'
 import { Provider } from 'react-redux';
 import { AppStore, makeStore } from './store/store';
-import { add } from './store/features/cart/cartSlice';
 
 
 

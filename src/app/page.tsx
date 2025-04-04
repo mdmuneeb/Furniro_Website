@@ -16,7 +16,7 @@ export default function Home() {
             setProductsInfo(products);
             
             if(products.length > 4){
-              let shortList = products.slice(0,4); 
+              const shortList = products.slice(0,4); 
               setShowShowButton(true);
               setData(shortList);
               console.log(shortList);
@@ -34,7 +34,7 @@ export default function Home() {
         fetchData();
       }, []);
 
-      let showMoreButtonFunction = () =>{
+      const showMoreButtonFunction = () =>{
         setShowShowButton(false);
         setData(productsInfo);
       }
@@ -95,13 +95,12 @@ export default function Home() {
         <div className={`flex justify-center ${showShowButton ? '': 'mb-10'}`}>
 
           <div className="grid grid-cols-4 gap-4">
-              {data.map((product)=>{
+              {data.map((product, index)=>{
                   return(
-                      <div>
-                          <Cart key={product._id} ProductInfo={product} />
+                      <div key={index}>
+                          <Cart  ProductInfo={product} />
                       </div>
                   ) 
-                  
               })}
 
             {/* <div>

@@ -9,7 +9,7 @@ const AddToCartButton = () => {
     const [itemCount, setItemCount] = useState(0);
 
     useEffect(()=>{
-        let storedItems = localStorage.getItem("cart");  
+        const storedItems = localStorage.getItem("cart");  
       if(storedItems){
         setItemCount(JSON.parse(storedItems).length);
       }
