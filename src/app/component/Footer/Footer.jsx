@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-white py-8 border-t">
       <div className="container mx-auto px-24">
-        <div className="flex flex-wrap items-start justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 items-start justify-between">
           {/* Logo Section */}
           <div className="w-1/4">
             <h1 className="text-2xl font-bold">Funiro.</h1>
@@ -32,9 +32,9 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Section */}
-          <div className="w-1/4">
+          <div className="sm:mt-10">
             <h3 className="text-gray-500 mb-4">Newsletter</h3>
-            <form className="flex">
+            <form className="grid grid-cols-1  gap-4 items-center">
               <input
                 type="email"
                 placeholder="Enter Your Email Address"

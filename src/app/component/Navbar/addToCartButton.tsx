@@ -18,7 +18,7 @@ const AddToCartButton = () => {
 
   return (
     <div className="relative py-2 -top-1.5">
-        <Link href={"#"}>
+        <Link href={"/component/MainCart"} >
             <div className="t-0 absolute left-3">
             <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">{itemCount}</p>
             </div>
