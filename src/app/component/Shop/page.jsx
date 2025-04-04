@@ -1,7 +1,7 @@
 "use client"; 
 import React, { useEffect, useState } from 'react';
-import Cart from '../../component/Cart/page.jsx'
-import Label from '../../component/Label/page.jsx'
+import Cart from '../../component/Cart/page'
+import Label from '../../component/Label/page'
 // import { client } from '@/sanity/lib/client.js'
 import { client } from '@/sanity/lib/client';
 
@@ -94,8 +94,8 @@ const Shop = () => {
         <div className="grid grid-cols-4 gap-4">
                 {data.map((product)=>{
                     return(
-                        <div>
-                            <Cart key={product._id} ProductInfo={product} />
+                        <div key={product._id}>
+                            <Cart  ProductInfo={product} />
                         </div>
                     ) 
                     

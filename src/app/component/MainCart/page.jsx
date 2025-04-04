@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import Label from '../Label/page.jsx'
+import Label from '../Label/page'
 import { urlFor } from '@/sanity/lib/image';
 import { useAppDispatch } from '@/app/store/hooks/index';
 import { removeFromCart } from '@/app/store/features/cart/cartSlice';
