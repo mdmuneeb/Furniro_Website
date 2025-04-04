@@ -5,6 +5,8 @@ import { client } from '@/sanity/lib/client';
 import imageUrlBuilder from "@sanity/image-url";
 import { useAppDispatch } from '@/app/store/hooks';
 import { add } from '@/app/store/features/cart/cartSlice';
+import PropTypes from 'prop-types';
+
 
 const builder = imageUrlBuilder(client);
 
@@ -12,7 +14,7 @@ function urlFor(source) {
   return builder.image(source).url();
 }
 
-const Cart = ({ProductInfo}) => {
+const Cart = ({ ProductInfo }) => {
   console.log(ProductInfo);
 
   const [imageUrl, setImageUrl] = useState("");
@@ -73,6 +75,16 @@ const Cart = ({ProductInfo}) => {
       </div>
     </div>
   );
+};
+Cart.propTypes = {
+  ProductInfo: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string,
+    description: PropTypes.string,
+    category: PropTypes.string,
+  }).isRequired,
 };
 
 export default Cart;
