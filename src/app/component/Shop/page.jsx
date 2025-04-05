@@ -14,16 +14,27 @@ import { client } from '@/sanity/lib/client';
 const Shop = () => {
 
     const [data, setData] = useState([]);
+    const [dataTwo, setDataTwo] = useState([]);
+    const [category, setCategory] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); 
-    const itemsPerPage = 8; 
+    const itemsPerPage = 6; 
     const [totalPages, setTotalPages] = useState(0);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isDropdownOpenPages, setIsDropdownOpenPages] = useState(false);
+    const [categoryType, setCategoryType] = useState("Default");
+
 
     useEffect(() => {
       async function fetchData() {
         try {
           const products = await client.fetch(`*[_type == 'product']`);
           setData(products);
+          setDataTwo(products);
           setTotalPages(Math.ceil(products.length / itemsPerPage));
+
+          const category = await client.fetch(`*[_type == 'category']`);
+          setCategory(category);
+          console.log(category);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -32,6 +43,25 @@ const Shop = () => {
       fetchData();
     }, []);
 
+    let handleCategoryChange = (category) => {
+      setCategoryType(category);
+      setIsDropdownOpen(false);
+
+      switch (category) {
+        case 'Chair':
+          setData(data.filter(item => item.category === 'Chair'));
+          break;
+        case 'Sofa':
+          setData(data.filter(item => item.category === 'Sofa'));
+          break;
+        case 'Table':
+          setData(data.filter(item => item.category === 'Table'));
+          break;
+        default:
+          setData(dataTwo);
+      }
+    
+    }
 
 
 
@@ -61,7 +91,7 @@ const Shop = () => {
     </div>
     <div>
       <p className='text-xs sm:text-base'>
-        Showing 1–16 of 32 results
+        Showing 1 – {Math.min(itemsPerPage,data.length)} of {data.length} results
       </p>
     </div>
   </div>
@@ -70,14 +100,80 @@ const Shop = () => {
     <div>
       <p className='text-xs sm:text-base'>Show</p>
     </div>
-    <div className='bg-white text-[#9F9F9F] p-2'>
-      <p className='text-xs sm:text-base'>16</p>
+    <div className=' text-[#9F9F9F] p-2'>
+      {/* <p className='text-xs sm:text-base'>16</p> */}
+    
+      <div class="relative inline-block text-left cursor-pointer">
+        <div>
+          <button type="button" onClick={()=> setIsDropdownOpenPages(!isDropdownOpenPages)} class="inline-flex w-full justify-center gap-x-1.5 bg-white rounded-md  px-3 py-2 text-sm font-semibold  ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 border-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            16
+            <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        {isDropdownOpenPages && (<div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+            <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">16</p>
+            <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">32</p>
+            <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">48</p>
+          </div>
+        </div>)}
+      </div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
     <div>
       <p className='text-xs sm:text-base'>Short By</p>
     </div>
-    <div className='bg-white text-[#9F9F9F] py-2 px-8 sm:px-12'>
-      <p className='text-xs sm:text-base'>Default</p>
+    <div className=' text-[#9F9F9F] py-2 px-8 sm:px-12'>
+      {/* <p className='text-xs sm:text-base'>Default</p> */}
+    
+      <div class="relative inline-block text-left cursor-pointer">
+        <div>
+          <button type="button" onClick={()=> setIsDropdownOpen(!isDropdownOpen)} class="inline-flex w-full justify-center gap-x-1.5 bg-white rounded-md  px-3 py-2 text-sm font-semibold  ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 border-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            {categoryType}
+            <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        {isDropdownOpen && (<div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+            {
+              category.map((cat, index)=>{
+                return(
+                  <button key={index} class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0" onClick={()=>handleCategoryChange(cat.CategoryName)}>{cat.CategoryName} </button>
+                )
+              })
+            }
+            {/* <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Chair</p>
+            <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Sofa</p>
+            <p href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Table</p> */}
+          </div>
+        </div>)}
+      </div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </div>
   </div>
 </div>
