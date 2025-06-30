@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import AddToCartButton from './addToCartButton.tsx';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,6 +95,24 @@ export default function Navbar() {
             <li>
               <AddToCartButton />
             </li>
+            <li>
+              <SignedOut>
+                <SignInButton>
+                  <button className="bg-[#B88E2F] text-white rounded-full text-sm font-medium px-4 py-2">
+                    Sign In
+                  </button>
+                </SignInButton>
+                {/* <SignUpButton mode="modal">
+                  <button className="ml-2 bg-[#6c47ff] text-white rounded-full text-sm font-medium px-4 py-2">
+                    Sign Up
+                  </button>
+                </SignUpButton> */}
+              </SignedOut>
+              <SignedIn>
+                <UserButton showName/>
+              </SignedIn>
+            </li>
+
           </ul>
         </div>
       </div>

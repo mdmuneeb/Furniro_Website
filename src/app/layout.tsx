@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from './component/Navbar/Navbar'
 import Footer from './component/Footer/Footer'
 import StoreProvider from "./StoreProvider";
+import { ClerkProvider } from "@clerk/nextjs";
+import ClerkLayout from "./ClerkLayout";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,15 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <StoreProvider>
-        <Navbar/>
-        {children}
-        <Footer/>
-        </StoreProvider>
+        suppressHydrationWarning={true} >
+          <ClerkLayout>
+            <StoreProvider>
+            <Navbar/>
+            {children}
+            <Footer/>
+            </StoreProvider>
+          </ClerkLayout>  
       </body>
     </html>
   );
