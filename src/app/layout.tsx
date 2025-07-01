@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from './component/Navbar/Navbar'
 import Footer from './component/Footer/Footer'
 import StoreProvider from "./StoreProvider";
-import { ClerkProvider } from "@clerk/nextjs";
 import ClerkLayout from "./ClerkLayout";
 const geistSans = Geist({
   variable: "--font-geist-sans",
