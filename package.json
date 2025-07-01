@@ -15,7 +15,6 @@
     "@sanity/vision": "^3.79.0",
     "@stripe/stripe-js": "^7.4.0",
     "dotenv": "^16.4.7",
-    "next-safe": "^3.5.0",
     "next-sanity": "^9.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
