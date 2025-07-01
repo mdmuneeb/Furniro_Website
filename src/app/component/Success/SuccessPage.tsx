@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 
+type CartItem = {
+  name: string;
+  price: number;
+  quantity?: number;
+};
+
 export default function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
@@ -14,10 +20,9 @@ export default function SuccessPage() {
   useEffect(() => {
     const saveOrder = async () => {
       try {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
         const total = cart.reduce(
-          (sum: number, item: { price: number; quantity?: number }) =>
-            sum + item.price * (item.quantity || 1),
+          (sum, item) => sum + item.price * (item.quantity || 1),
           0
         );
 
@@ -32,7 +37,7 @@ export default function SuccessPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             userId: user?.id,
-            products: cart.map(({ name, price, quantity }) => ({
+            products: cart.map(({ name, price, quantity }: CartItem) => ({
               name,
               price,
               quantity: quantity || 1,
